@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Backup Codes{% endblock %}
+{% block content %}
+<div class="card">
+    <h2>Backup Codes</h2>
+    <p>Save these codes in a secure location. Each code can be used once if you lose access to your authenticator.</p>
+    <div style="background: #f8f9fa; padding: 15px; border-radius: 4px; margin: 20px 0; font-family: monospace;">
+        {% for code in codes %}
+            <div>{{ code }}</div>
+        {% endfor %}
+    </div>
+    <a href="{% url 'dashboard' %}"><button>Back to Dashboard</button></a>
+</div>
+{% endblock %}

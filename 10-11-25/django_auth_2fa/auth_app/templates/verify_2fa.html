@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Verify 2FA{% endblock %}
+{% block content %}
+<div class="card">
+    <h2>Two-Factor Verification</h2>
+    <p>Welcome back, <strong>{{ username }}</strong>!</p>
+    
+    <div style="background: #e7f3ff; padding: 15px; border-radius: 4px; margin-bottom: 20px;">
+        <strong>Option 1:</strong> Enter your 6-digit code from your authenticator app
+    </div>
+    
+    <form method="post" style="margin-bottom: 20px;">
+        {% csrf_token %}
+        <input type="text" name="token" placeholder="000000" maxlength="6" inputmode="numeric" autocomplete="off">
+        <button type="submit">Verify Code</button>
+    </form>
+    
+    <hr style="margin: 20px 0;">
+    
+    <div style="background: #fff3cd; padding: 15px; border-radius: 4px; margin-bottom: 20px;">
+        <strong>Option 2:</strong> Use a backup code instead
+    </div>
+    
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="backup_code" placeholder="12345678" maxlength="8">
+        <button type="submit" style="background: #28a745;">Use Backup Code</button>
+    </form>
+    
+    {% if messages %}
+    <div style="margin-top: 15px;">
+        {% for message in messages %}
+        <div style="padding: 10px; border-radius: 4px; {% if 'Invalid' in message or 'error' in message|lower %}background: #f8d7da; color: #721c24;{% else %}background: #d4edda; color: #155724;{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

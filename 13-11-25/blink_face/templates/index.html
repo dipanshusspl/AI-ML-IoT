@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Eye Blink Face ID</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+  <style>
+    body { text-align: center; font-family: Arial; }
+    video { border: 2px solid #333; border-radius: 10px; margin-top: 20px; }
+    #status { font-size: 22px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Eye Blink Face ID (Liveness Check)</h1>
+  <video id="video" width="480" height="360" autoplay></video>
+  <p id="status">Initializing...</p>
+</body>
+</html> 

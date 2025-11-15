@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HiveMQ MQTT Dashboardddddddddddddddddddddd</title>
+  <meta charset="utf-8">
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f9fafb;
+      margin: 0;
+      padding: 40px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    #log {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      width: 420px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: left;
+      max-height: 400px;
+      overflow-y: auto;
+      transition: background 0.3s ease;
+    }
+
+    .message {
+      padding: 10px 12px;
+      margin-bottom: 10px;
+      border-left: 4px solid #4CAF50;
+      background: #f7fff8;
+      border-radius: 6px;
+      font-size: 1em;
+      line-height: 1.4;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .timestamp {
+      font-size: 0.8em;
+      color: #777;
+      display: block;
+      margin-top: 4px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <h1>🚀 Live MQTT Dashboard</h1>
+  <div id="log">
+    <p style="text-align:center; color:#aaa;">Waiting for messages...</p>
+  </div>
+
+  <script>
+    // Explicitly connect to Flask SocketIO server
+    const socket = io("http://localhost:5000", {
+      transports: ["websocket", "polling"]
+    });
+
+    socket.on("connect", () => {
+      console.log("✅ Connected to Flask-SocketIO server");
+    });
+
+    socket.on("connect_error", (err) => {
+      console.error("❌ Connection error:", err.message);
+    });
+
+    socket.on("mqtt_message", (data) => {
+      console.log("📩 MQTT Update:", data);
+      const log = document.getElementById("log");
+
+      // Remove "waiting" text if exists
+      if (log.children.length === 1 && log.children[0].tagName === "P") {
+        log.innerHTML = "";
+      }
+
+      // Create new message block
+      const msgDiv = document.createElement("div");
+      msgDiv.classList.add("message");
+      const now = new Date();
+      const timeString = now.toLocaleTimeString();
+
+      msgDiv.innerHTML = `
+        <strong>${data.topic}</strong>: ${data.message}
+        <span class="timestamp">🕒 ${timeString}</span>
+      `;
+
+      // Append message and auto-scroll
+      log.appendChild(msgDiv);
+      log.scrollTop = log.scrollHeight;
+    });
+  </script>
+</body>
+</html>

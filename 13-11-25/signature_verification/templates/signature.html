@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Signature Verification</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body style="text-align:center">
+  <h1>Signature Verification</h1>
+  <input type="file" accept="image/*" id="fileInput">
+  <p id="result"></p>
+
+  <script>
+    document.getElementById("fileInput").addEventListener("change", async (e) => {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = async () => {
+        const imageData = reader.result;
+        document.getElementById("result").innerText = "Verifying...";
+        try {
+          const res = await axios.post("/verify-signature", { image: imageData });
+          const data = res.data;
+          if (data.match) {
+            document.getElementById("result").innerText = `✅ Signature Match (score: ${data.score})`;
+          } else {
+            document.getElementById("result").innerText = `❌ Signature Mismatch (score: ${data.score})`;
+          }
+        } catch (err) {
+          document.getElementById("result").innerText = "Error verifying signature.";
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  </script>
+</body>
+</html>
