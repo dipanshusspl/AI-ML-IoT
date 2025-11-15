@@ -1,0 +1,24 @@
+{
+  "Vision": [
+    {
+      "name": "Color Detection 11-11-25",
+      "path": "../11-11-25/color_detection/app.py"
+    },
+    {
+      "name": "Hand Gesture 12-11-25",
+      "path": "../12-11-25/hand_gesture/app.py"
+    }
+  ],
+  "Audio": [
+    {
+      "name": "Speech Recognizer 14-11-25",
+      "path": "../14-11-25/speech_recognition/main.py"
+    }
+  ],
+  "IoT": [
+    {
+      "name": "Smart Sensor 07-11-25",
+      "path": "../07-11-25/smart_sensor/main.py"
+    }
+  ]
+}

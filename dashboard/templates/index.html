@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI-ML-IoT Dashboard</title>
+    <style>
+        body { margin: 0; font-family: Arial; }
+        .sidebar{
+            width: 260px; background:#111; color:white;
+            height:100vh; float:left; padding:20px;
+        }
+        a{color:#ccc; text-decoration:none; display:block; margin:5px 0;}
+        a:hover{color:white;}
+        h3{margin-top:25px;}
+        .main{margin-left:280px; padding:20px;}
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>AI-ML-IoT</h2>
+
+    {% for category, items in menus.items() %}
+        <h3>{{ category }}</h3>
+        {% for item in items %}
+            <a href="/run/{{category}}/{{loop.index0}}">{{ item.name }}</a>
+        {% endfor %}
+    {% endfor %}
+</div>
+
+<div class="main">
+    <h1>Welcome!</h1>
+</div>
+
+</body>
+</html>
